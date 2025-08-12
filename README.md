@@ -40,3 +40,9 @@ Built for the Full Stack Developer Evaluation Task.
 ```bash
 git clone https://github.com/yourname/whatsapp-clone.git
 cd whatsapp-clone
+cd backend
+npm install
+npm start
+cd ../frontend
+npm install
+npm start
