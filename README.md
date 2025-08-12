@@ -31,4 +31,12 @@ Built for the Full Stack Developer Evaluation Task.
 
 ---
 
-## 📦 Project Structure
+
+---
+
+## 🔧 Setup & Installation (For Reference)
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/yourname/whatsapp-clone.git
+cd whatsapp-clone
