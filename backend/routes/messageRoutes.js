@@ -1,49 +1,24 @@
+// backend/routes/messageRoutes.js
+
 const express = require('express');
 const router = express.Router();
-const { processPayload } = require('../utils/payloadProcessor');
-const Message = require('../models/Message');
+const {
+  webhookHandler,
+  getChats,
+  getMessagesByWaId,
+  sendMessage,
+} = require('../controllers/messageController');
 
 // Webhook endpoint
-router.post('/webhook', async (req, res) => {
-  await processPayload(req.body);
-  res.status(200).send('OK');
-});
+router.post('/webhook', webhookHandler);
 
-// Get all chats grouped by wa_id
-router.get('/chats', async (req, res) => {
-  const result = await Message.aggregate([
-    { $sort: { timestamp: 1 } },
-    {
-      $group: {
-        _id: "$wa_id",
-        name: { $first: "$name" },
-        messages: { $push: "$$ROOT" }
-      }
-    }
-  ]);
-  res.json(result);
-});
+// Get all chats
+router.get('/chats', getChats);
 
 // Get messages by wa_id
-router.get('/messages/:wa_id', async (req, res) => {
-  const messages = await Message.find({ wa_id: req.params.wa_id }).sort('timestamp');
-  res.json(messages);
-});
+router.get('/messages/:wa_id', getMessagesByWaId);
 
-// Send new message (outbound)
-router.post('/send', async (req, res) => {
-  const { wa_id, name, text } = req.body;
-  const message = new Message({
-    wa_id,
-    name,
-    text,
-    direction: 'outbound',
-    status: 'sent',
-    timestamp: new Date(),
-  });
-  await message.save();
-  global.io.emit('new_message', message); // Real-time
-  res.status(201).json(message);
-});
+// Send new message
+router.post('/send', sendMessage);
 
 module.exports = router;

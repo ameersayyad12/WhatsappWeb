@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import ChatWindow from './components/ChatWindow';
-const socket = io('https://your-backend.onrender.com');
+const socket = io('https://whatsapp-clone-backend-lint.onrender.com');
 
 function App() {
   const [chats, setChats] = useState([]);
