@@ -79,3 +79,4 @@ function ChatWindow({ chat }) {
     </div>
   );
 }
+export default ChatWindow;
