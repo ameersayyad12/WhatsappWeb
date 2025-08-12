@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import { ChatWindow } from './components/ChatWindow';
+import ChatWindow from './components/ChatWindow';
 const socket = io('https://your-backend.onrender.com');
 
 function App() {
